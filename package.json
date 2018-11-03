@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cryptr": "^4.0.0",
+    "lzutf8": "^0.5.5",
+    "peerjs": "^0.3.18",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "simple-peer": "^9.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
