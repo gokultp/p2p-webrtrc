@@ -85,13 +85,6 @@ class App extends Component {
         <textarea placeholder='Peer id' value={peer_id} onChange={this.onTextChange.bind(this, 'peer_id')}></textarea>
         <button onClick={this.call.bind(this)}>call</button>
 
-
-        {/* <textarea placeholder='message' value={message} onChange={this.onTextChange.bind(this, 'message')}></textarea>
-        <button onClick={this.send.bind(this)}>send</button>
-        {conversations.map(c=>(
-          <div>{c}</div>
-        ))} */}
-
         {video_url? <video src={video_url} autoPlay={true} ></video>:null}
       </div>
     );
