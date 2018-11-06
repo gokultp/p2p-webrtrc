@@ -14,10 +14,6 @@ const encode=(data)=>{
   // return cryptr.encrypt(output)
 }
 
-const decode=(data)=>{
-  return JSON.parse(data)
-  // return JSON.parse(LZUTF8.decompress(cryptr.decrypt(data), {inputEncoding: "Base64"}));
-}
 
 class App extends Component {
   constructor(props){
