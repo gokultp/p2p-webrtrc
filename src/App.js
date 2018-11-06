@@ -1,25 +1,98 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Peer from 'peerjs';
+
 import './App.css';
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('asdfzxcv');
+var LZUTF8 = require('lzutf8');
+
+
+
+const encode=(data)=>{
+  return JSON.stringify(data);
+  // var output = LZUTF8.compress(JSON.stringify(data), {outputEncoding: "Base64"});
+  // return cryptr.encrypt(output)
+}
+
+const decode=(data)=>{
+  return JSON.parse(data)
+  // return JSON.parse(LZUTF8.decompress(cryptr.decrypt(data), {inputEncoding: "Base64"}));
+}
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state ={conversations:[]}
+  }
+
+  componentDidMount(){
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    const {location} = window;
+    const self = this;
+    this.peer = new Peer({key: 'lwjd5qra8257b9', debug: 2});   
+    
+    this.peer.on('open', id=>{
+      console.log('open', id)
+      self.setState({id})
+    });
+
+    this.peer.on('call', call=>{
+      navigator.getUserMedia({video: true, audio: true}, function(stream) {
+        call.answer(stream);
+        call.on('stream', rStream=>{
+          console.log('stream', rStream)
+          self.setState({video_url: window.URL.createObjectURL(rStream)})
+        })
+      })
+    })
+  }
+
+  onTextChange(key, evt){
+    let state = this.state;
+    state[key] = evt.target.value;
+    this.setState(state);
+  }
+  call(){
+    const{peer_id} = this.state;
+    const self = this;
+
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    navigator.getUserMedia({video: true, audio: true}, function(stream) {
+      var call = self.peer.call(peer_id, stream);
+      call.on('stream', function(remoteStream) {
+        console.log('stream', remoteStream)
+        self.setState({video_url: window.URL.createObjectURL(remoteStream)})
+      });
+    }, function(err) {
+      console.log('Failed to get local stream' ,err);
+    });
+  }
+
+  send(){
+    let {conversations, message} = this.state;
+    conversations.push(`me: ${message}`);
+    this.p.send(message)
+    message = ""
+    this.setState({conversations, message});
+
+  }
+
   render() {
+    const {id, peer_id, conversations, message, video_url} = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        {id? <p>{id}</p>: null}
+        <textarea placeholder='Peer id' value={peer_id} onChange={this.onTextChange.bind(this, 'peer_id')}></textarea>
+        <button onClick={this.call.bind(this)}>call</button>
+
+
+        {/* <textarea placeholder='message' value={message} onChange={this.onTextChange.bind(this, 'message')}></textarea>
+        <button onClick={this.send.bind(this)}>send</button>
+        {conversations.map(c=>(
+          <div>{c}</div>
+        ))} */}
+
+        {video_url? <video src={video_url} autoPlay={true} ></video>:null}
       </div>
     );
   }
