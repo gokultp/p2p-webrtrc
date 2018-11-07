@@ -7,14 +7,6 @@ const cryptr = new Cryptr('asdfzxcv');
 var LZUTF8 = require('lzutf8');
 
 
-
-const encode=(data)=>{
-  return JSON.stringify(data);
-  // var output = LZUTF8.compress(JSON.stringify(data), {outputEncoding: "Base64"});
-  // return cryptr.encrypt(output)
-}
-
-
 class App extends Component {
   constructor(props){
     super(props)
