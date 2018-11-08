@@ -23,7 +23,6 @@ class App extends Component {
       navigator.getUserMedia({video: true, audio: true}, function(stream) {
         call.answer(stream);
         call.on('stream', rStream=>{
-          console.log('stream', rStream)
           self.setState({video_url: window.URL.createObjectURL(rStream)})
         })
       })
