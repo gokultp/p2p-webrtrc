@@ -3,8 +3,6 @@ import Peer from 'peerjs';
 
 import './App.css';
 const Cryptr = require('cryptr');
-const cryptr = new Cryptr('asdfzxcv');
-var LZUTF8 = require('lzutf8');
 
 
 class App extends Component {
