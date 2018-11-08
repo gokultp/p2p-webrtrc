@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Peer from 'peerjs';
 
 import './App.css';
-const Cryptr = require('cryptr');
 
 
 class App extends Component {
