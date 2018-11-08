@@ -15,7 +15,6 @@ class App extends Component {
     this.peer = new Peer({key: 'lwjd5qra8257b9', debug: 2});   
     
     this.peer.on('open', id=>{
-      console.log('open', id)
       self.setState({id})
     });
 
