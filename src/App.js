@@ -43,7 +43,6 @@ class App extends Component {
     navigator.getUserMedia({video: true, audio: true}, function(stream) {
       var call = self.peer.call(peer_id, stream);
       call.on('stream', function(remoteStream) {
-        console.log('stream', remoteStream)
         self.setState({video_url: window.URL.createObjectURL(remoteStream)})
       });
     }, function(err) {
