@@ -64,7 +64,6 @@ class App extends Component {
         {id? <p>{id}</p>: null}
         <textarea placeholder='Peer id' value={peer_id} onChange={this.onTextChange.bind(this, 'peer_id')}></textarea>
         <button onClick={this.call.bind(this)}>call</button>
-
         {video_url? <video src={video_url} autoPlay={true} ></video>:null}
       </div>
     );
